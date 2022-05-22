@@ -1,0 +1,44 @@
+version: '3.8'
+services:
+  kepler: 
+    build: 
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: kepler
+    network_mode: host
+    volumes:
+      - ./server/server.ini:/usr/src/app/server.ini
+  db:
+    image: mariadb
+    container_name: maridb
+    environment:
+      MYSQL_ROOT_PASSWORD: kepler123
+      MYSQL_DATABASE: kepler
+    restart: always
+    ports:
+      - 3306:3306
+    volumes:
+      - ./server/keplerdb.sql:/docker-entrypoint-initdb.d/init.sql
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    links:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    restart: always
+    ports:
+      - 8080:80
+  php-apache-environment:
+    container_name: web-server
+    build: 
+      context: ./web-server
+      dockerfile: Dockerfile
+    volumes:
+      - ./web-server/files:/var/www/html/
+      - ./web-server/files/.htaccess:/var/www/html/.htaccess
+    ports:
+      - 80:80
+

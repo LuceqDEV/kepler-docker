@@ -1,0 +1,46 @@
+AddType application/x-httpd-php56 .php
+
+#SetEnv downgrade-1.0 1
+#SetEnv force-response-1.0 1
+#SetEnv no-gzip 1
+#SetEnv nokeepalive 1
+#SetEnv force-no-vary 1
+#Header unset Upgrade
+#Header set Connection "close"
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+RewriteRule ^shared/ads/(.*)$ /shared/c_images/ads/$1.gif [R=302,NC]
+
+RewriteRule ^habbo-imaging/badge/(.*).gif$ ./groupbadge/badge.php?placa=$1
+RewriteRule ^habbo-imaging/ads/(.*).gif$ ./ads/$1.gif
+
+RewriteRule  ^download  ./hotel_compressed_042120222226.zip
+</IfModule>
+
+
+<IfModule mod_headers.c>
+    Header set Pragma "no-cache"
+    Header set Expires 0
+    Header unset ETag
+    Header set Tranfer-Encoding "chunked"
+    Header set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
+    Header set cache-control "no-transform"
+</IfModule>
+
+<FilesMatch "\.(zip)$">
+    <IfModule mod_expires.c>
+        ExpiresActive Off
+    </IfModule>
+    <IfModule mod_headers.c>
+        FileETag None
+        Header unset ETag
+        Header unset Pragma
+        Header unset Cache-Control
+        Header unset Last-Modified
+        Header set Pragma "no-cache"
+        Header set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
+        Header set Expires "Thu, 1 Jan 1970 00:00:00 GMT"
+    </IfModule>
+</FilesMatch>
