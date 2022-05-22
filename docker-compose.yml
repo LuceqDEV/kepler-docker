@@ -1,13 +1,5 @@
 version: '3.8'
 services:
-  kepler: 
-    build: 
-      context: ./server
-      dockerfile: Dockerfile
-    container_name: kepler
-    network_mode: host
-    volumes:
-      - ./server/server.ini:/usr/src/app/server.ini
   db:
     image: mariadb
     container_name: maridb
@@ -41,4 +33,18 @@ services:
       - ./web-server/files/.htaccess:/var/www/html/.htaccess
     ports:
       - 80:80
+  kepler:
+    depends_on:
+      - db
+    build: 
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: kepler
+    links: 
+      - db
+    ports:
+      - 12321:12321
+      - 12322:12322
+    volumes:
+      - ./server/server.ini:/usr/src/app/server.ini
 

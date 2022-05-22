@@ -45,7 +45,6 @@ interface.cmds.user.owner=["take_rights","give_rights","kick","friend","i gnor e
 interface.cmds.user.personal=["badge","dance","wave","hcdance","userpage"]
 interstitial.max.displays=5
 language=en
-link.format.userpage=http://www.habbo.fi/home/%ID%/id/
 moderator.cmds=[":alert x",":ban x",":kick x",":superban x",":shutup x",":unmute x",":transfer x",":softkick x"]
 navigator.private.default=4
 navigator.public.default=3
