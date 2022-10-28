@@ -15,6 +15,8 @@ Whats included?
 - Run `docker-compose up -d` in the terminal.
 - Open the windows-client folder and click `Start hotel` this will launch a Macromedia projector that you can use to play locally. 
 
+
+Make sure Kepler is running, if you are having trouble connecting try executing `docker restart Kepler`
 **Steps for spinning everything down** 
 - Run `docker-compose down`  in the terminal.
 
